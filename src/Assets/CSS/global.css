@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+}
+
+body{
+    overflow-x: hidden;
+}
+
+/* Home */
+
+
+/* utilities */
+.hideScrollbar::-webkit-scrollbar{
+    display: none;
+}
+
+.modifiedScrollbar::-webkit-scrollbar{
+    background-color: transparent;
+    width: 4px;
+}
+
+.modifiedScrollbar::-webkit-scrollbar-thumb{
+    background: rebeccapurple;
+    border-radius: 10rem;
+    width: 1rem;
+}
+
+.card:hover{
+    background: radial-gradient(#f54d69, transparent);
+}
+
+.textWraper{
+    white-space: nowrap;
+}
+
+.likedSongsBg{
+    background: radial-gradient(#c7183a, transparent);
+}

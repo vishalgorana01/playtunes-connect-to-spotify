@@ -71,7 +71,7 @@ function ControllerSidebar(props) {
         })
     }, [])
     return (
-        <div className='absolute w-full h-20 bottom-0 flex flex-col gap-y-10 items-center py-5 px-6 text-cyan-200 justify-center lg:justify-start lg:w-96 lg:h-[48rem] lg:relative' style={{ backgroundColor: `${colorPalette.tertiary}` }}>
+        <div className='absolute w-full h-20 z-20 lg:z-30 bottom-0 flex flex-col gap-y-10 items-center py-5 px-6 text-cyan-200 justify-center lg:justify-start lg:w-96 lg:h-[48rem] lg:relative' style={{ backgroundColor: `${colorPalette.tertiary}`, zIndex: '2' }}>
             <div className='hidden w-full text-pink-600 text-xl font-sans font-semibold text-left lg:inline-block '>Playtunes</div>
 
             <div className='flex flex-row text-left items-start text-sm gap-y-2.5 justify-between w-full lg:flex-col lg:justify-center'>

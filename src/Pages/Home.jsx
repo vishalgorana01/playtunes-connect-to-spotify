@@ -35,7 +35,7 @@ function Home() {
           <ControllerSidebar setMusicComponents={setMusicComponents} />
 
           <div className='relative text-gray-50 flex flex-col items-center justify-start h-full w-full lg:max-w-[80%]'>
-          <span className='absolute z-[21] h-16 w-full bg-[#080725] top-16 lg:hidden' style={{ borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem' }}></span>
+          <span className='absolute h-16 w-full bg-[#080725] top-16 lg:hidden' style={{ borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem' }}></span>
             <Navbar />
             {musicComponents}
           </div>

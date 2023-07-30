@@ -22,7 +22,7 @@ function Player() {
                     </span>
                 </span>
 
-                <span className='flex items-center justify-center'>
+                <span className='flex items-center justify-center w-44 sm:w-80'>
                     <audio className='w-44 sm:w-80' controls autoPlay src={audioUrl.url}>
                     </audio>
                 </span>

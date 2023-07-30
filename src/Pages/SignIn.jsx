@@ -7,7 +7,7 @@ import logo from '../Assets/Images/spotify logo.png'
 function SignIn() {
   const authentication = () => {
     const client_id = `${credentials.clientId}`;
-    const redirectUrl = 'http://localhost:3000/home';
+    const redirectUrl = 'https://playtunes-connect-to-spotify.vercel.app/home';
     const apiUrl = 'https://accounts.spotify.com/authorize';
     const scope = [
       "user-read-email",

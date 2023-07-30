@@ -19,28 +19,31 @@ function Navbar() {
     firstLetter: ''
   })
 
-  useEffect(()=>{
+  useEffect(() => {
     axios.get('https://api.spotify.com/v1/me', {
       headers: {
-        Authorization: 'Bearer '+token
+        Authorization: 'Bearer ' + token
       }
     })
-    .then((resp)=>{
-      console.log(resp)
+      .then((resp) => {
+        console.log(resp)
 
-      setProfile({
-        displayName: resp.data.display_name,
-        firstLetter: resp.data.display_name.toString()[0]
+        setProfile({
+          displayName: resp.data.display_name,
+          firstLetter: resp.data.display_name.toString()[0]
+        })
       })
-    })
-    .catch((err)=>{
-      console.log(err)
-    })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [token, dispatch])
 
   return (
-    <div className='flex text-cyan-200 gap-x-7 items-center justify-between w-full py-3.5 px-2.5 lg:px-12 bg-[#06061f]'>
-      <span className='flex items-center justify-center gap-x-0.5 text-xl'><MdOutlineArrowBackIosNew className='cursor-pointer' /> <MdArrowForwardIos className='cursor-pointer' /></span>
+    <div className='flex text-cyan-200 gap-x-7 items-start justify-between h-32 lg:h-auto w-full py-3.5 px-2.5 lg:px-12 bg-[#06061f]'>
+      <span className='flex items-center justify-center gap-x-0.5 text-xl'>
+        <MdOutlineArrowBackIosNew className='cursor-pointer' />
+        <MdArrowForwardIos className='cursor-pointer' />
+      </span>
 
       <label htmlFor="" className='flex items-center justify-center gap-y-2.5 w-full bg-[#19183e] py-1.5 px-3 rounded-md'>
         <BsSearch className='text-xl mr-2' />

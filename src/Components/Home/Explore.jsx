@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../../Assets/CSS/global.css'
 import { credentials } from '../Utilities/Credentials'
 import axios from 'axios'
@@ -20,10 +20,9 @@ import Artist from './Artists'
 
 function Explore(props) {
     const {setDescription} = props
-    
     return (
         <>
-            <div className='flex mb-16 modifiedScrollbar items-center justify-start flex-col overflow-y-scroll w-full lg:max-h-[72vh]'>
+            <div className='flex mb-16 lg:mb-0 modifiedScrollbar items-center justify-start flex-col overflow-y-scroll w-full lg:max-h-[600px]'>
                 {/* several albums */}
                 <SeveralAlbums setDescription={setDescription} />
 

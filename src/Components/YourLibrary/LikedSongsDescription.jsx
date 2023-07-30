@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
-
+import React, { useContext, useEffect, useState } from 'react'
+import '../../Assets/CSS/global.css'
 import image1 from '../../Assets/Images/album2.jpg'
+import { myContext } from '../Utilities/AudioContext'
 
 // react-icons
 import { AiFillPlayCircle, AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
@@ -11,6 +12,7 @@ import axios from 'axios'
 import { useStateProvider } from '../Utilities/StateProvider'
 
 function LikedSongsDescription() {
+  const { audioUrl, setAudioUrl } = useContext(myContext)
   const [{ token }, dispatch] = useStateProvider()
   const [desc, setDesc] = useState(
     <>
@@ -66,11 +68,16 @@ function LikedSongsDescription() {
       }
     })
       .then((resp) => {
-        // console.log(resp.data)
+        console.log(resp.data)
 
         const trackData = resp.data.items.map(({ track, duration_ms, name }, index) => {
           return (
-            <span key={index} className='flex mb-3 px-1.5 py-2.5 rounded-md cursor-pointer items-start justify-start  w-screen sm:w-full hover:bg-[#79124536]'>
+            <span key={index} className='flex mb-3 px-1.5 py-2.5 rounded-md cursor-pointer items-start justify-start  w-screen sm:w-full hover:bg-[#79124536]' onClick={() => setAudioUrl({
+              url: track.preview_url,
+              image: '',
+              name: track.name,
+              artists: track.artists
+            })}>
               <span className='w-12 px-1.5 '>{index + 1}</span>
               <span className='flex gap-x-2.5 items-center justify-start w-full'>
                 <img className='h-12 hidden sm:h-16 sm:inline-block' src={image1} alt="error loading" />
@@ -131,7 +138,7 @@ function LikedSongsDescription() {
   }, [token, dispatch])
 
   return (
-    <div className='flex pb-20 mb-26 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[72vh]'>
+    <div className='flex modifiedScrollbar pb-20 lg:pb-0 mb-26 lg:mb-0 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[600px]'>
       {desc}
     </div>
   )

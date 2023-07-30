@@ -71,7 +71,7 @@ function ControllerSidebar(props) {
         })
     }, [])
     return (
-        <div className='absolute z-10 w-full h-20 bottom-0 flex flex-col gap-y-10 items-center py-5 px-6 text-cyan-200 justify-start lg:w-96 lg:h-[48rem] lg:relative' style={{ backgroundColor: `${colorPalette.tertiary}` }}>
+        <div className='absolute w-full h-20 bottom-0 flex flex-col gap-y-10 items-center py-5 px-6 text-cyan-200 justify-center lg:justify-start lg:w-96 lg:h-[48rem] lg:relative' style={{ backgroundColor: `${colorPalette.tertiary}` }}>
             <div className='hidden w-full text-pink-600 text-xl font-sans font-semibold text-left lg:inline-block '>Playtunes</div>
 
             <div className='flex flex-row text-left items-start text-sm gap-y-2.5 justify-between w-full lg:flex-col lg:justify-center'>
@@ -111,6 +111,9 @@ function ControllerSidebar(props) {
                 <h1 className='text-md tracking-wider mb-3.5 text-pink-400'>Activity</h1>
                 <button className='flex cursor-pointer items-center justify-center px-3 py-1.5 rounded-md bg-pink-500 hover:bg-pink-400'>create room</button>
             </div> */}
+
+            {/* psuedo element */}
+            <span className='hidden lg:inline-block absolute z-30 h-[2.5rem] w-full bg-[#09092b] bottom-32 lg:bottom-16' style={{borderBottomLeftRadius: '2rem'}}></span>
         </div>
     )
 }

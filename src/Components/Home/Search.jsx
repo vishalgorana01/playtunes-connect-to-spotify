@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useStateProvider } from '../Utilities/StateProvider'
 
+import '../../Assets/CSS/global.css'
+
 import album1 from '../../Assets/Images/album1.jpg'
 import axios from 'axios';
 
@@ -54,7 +56,7 @@ function Search() {
   }, [token, dispatch])
 
   return (
-    <div className='flex mb-16 flex-col gap-y-8 items-center justify-start w-full py-8 px-2 sm:px-6 lg:px-12 overflow-y-scroll lg:max-h-[72vh]'>
+    <div className='modifiedScrollbar flex mb-16 flex-col gap-y-8 items-center justify-start w-full py-8 px-2 sm:px-6 lg:px-12 overflow-y-scroll lg:max-h-[600px]'>
       <h1 className='text-left w-full font-semibold text-xl'>Browse all</h1>
 
       <div className='grid grid-cols-2 gap-3.5 w-full md:grid-cols-3 xl:grid-cols-4'>

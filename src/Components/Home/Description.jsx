@@ -2,6 +2,8 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { useStateProvider } from '../Utilities/StateProvider'
 
+import '../../Assets/CSS/global.css'
+
 import image1 from '../../Assets/Images/album1.jpg'
 import image2 from '../../Assets/Images/album2.jpg'
 
@@ -139,7 +141,7 @@ function Description(props) {
 
     return (
         <>
-            <div className='flex mb-26 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[72vh]'>
+            <div className='flex modifiedScrollbar mb-26 lg:mb-0 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[72vh]'>
                 {desc}
                 {/* <embed src="https://p.scdn.co/mp3-preview/a89463ed3d1100f2732b8961065219149e61841b?cid=6a9912a00dcb4fc38eb99b185db7dd17" type="" /> */}
             </div>

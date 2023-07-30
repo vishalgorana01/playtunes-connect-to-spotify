@@ -5,6 +5,8 @@ import { useStateProvider } from '../Utilities/StateProvider'
 import image1 from '../../Assets/Images/album1.jpg'
 import image2 from '../../Assets/Images/album2.jpg'
 
+import '../../Assets/CSS/global.css'
+
 // react-icons
 import { AiFillPlayCircle, AiOutlineHeart } from 'react-icons/ai'
 import { BsThreeDots } from 'react-icons/bs'
@@ -124,7 +126,7 @@ function ArtistDescription(props) {
                         })
 
                         setArtistTopTracks(
-                            <div className='flex flex-col pb-20 items-center justify-center w-full px-6 py-5'>
+                            <div className='flex flex-col pb-20 lg:pb-0 items-center justify-center w-full px-6 py-5'>
                                 <span className='flex items-center justify-center w-full'>
                                     <span className='w-10'>#</span>
                                     <span className='w-full text-left'>title</span>
@@ -138,38 +140,6 @@ function ArtistDescription(props) {
                         console.log(err)
                     })
 
-                // const { name, type, images, label, tracks } = resp.data
-
-                // setDesc(
-                //     <>
-                //         <div className='flex items-center justify-center w-full px-6 py-5 sm:px-12' style={{ background: 'radial-gradient(#f54d69, transparent)' }}>
-                //             <span className='flex gap-x-5 items-center justify-start w-full sm:gap-x-8' >
-                //                 <img className='h-24 sm:h-28 lg:h-36' src={images[0].url} alt="error loading" />
-                //                 <span className='flex text-left font-semibold gap-y-0.5 flex-col items-start justify-center sm:gap-y-3.5'>
-                //                     <h4 className='italic text-xs sm:text-sm md:text-md lg:text-lg'>{type}</h4>
-                //                     <h1 className='text-md sm:text-3xl md:text-4xl lg:text-5xl'>{name}</h1>
-                //                     <h5 className='text-xs sm:text-md'>{label}</h5>
-                //                 </span>
-                //             </span>
-                //         </div>
-
-                //         <div className='flex text-3xl gap-x-5 items-center justify-start w-full py-3.5 px-6 sm:px-12' style={{ background: `${colorPalette.tertiary}` }}>
-                //             <AiFillPlayCircle className='cursor-poitner text-3xl sm:text-5xl' />
-                //             <button className='text-lg py-1 px-5 cursor-pointer rounded-full hover:bg-[#79124536]' style={{ border: '2px solid white' }}>follow</button>
-                //             <BsThreeDots className=' cursor-pointer text-xl sm:text-2xl' />
-                //         </div>
-
-                //         <div className='flex flex-col items-center justify-center w-full px-6 py-5'>
-                //             <span className='flex items-center justify-center w-full'>
-                //                 <span className='w-10'>#</span>
-                //                 <span className='w-full text-left'>title</span>
-                //                 <span className='w-12'><BiTime /></span>
-                //             </span>
-                //             {trackData}
-                //         </div>
-                //     </>
-                // )
-
             })
             .catch((err) => {
                 console.log(err)
@@ -180,7 +150,7 @@ function ArtistDescription(props) {
 
     return (
         <>
-            <div className='flex mb-26 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[72vh]'>
+            <div className='modifiedScrollbar flex mb-26 lg:mb-0 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[600px]'>
                 {ArtistDetails}
                 {desc}
                 {artistsTopTracks}

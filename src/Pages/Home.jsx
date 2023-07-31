@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { colorPalette } from '../Components/Utilities/ColorPalette'
 import ControllerSidebar from '../Components/Sidebar/ControllerSidebar'
 import Navbar from '../Components/Common/Navbar'
@@ -6,9 +6,11 @@ import Explore from '../Components/Home/Explore'
 import Player from '../Components/Common/Player'
 import axios from 'axios'
 import { useStateProvider } from '../Components/Utilities/StateProvider'
+import { myContext } from '../Components/Utilities/AudioContext'
 
 function Home() {
   const [{token}, dispatch] = useStateProvider()
+  const {component, setCoponent} = useContext(myContext)
   const [musicComponents, setMusicComponents] = useState(null)
   useEffect(() => {
     axios.get('https://api.spotify.com/v1/me/player/currently-playing', {
@@ -17,7 +19,6 @@ function Home() {
       }
     })
     .then((resp)=>{
-      console.log("--->",resp)
     })
     .catch((err)=>{
       console.log(err)
@@ -35,9 +36,10 @@ function Home() {
           <ControllerSidebar setMusicComponents={setMusicComponents} />
 
           <div className='relative text-gray-50 flex flex-col items-center justify-start h-full w-full lg:max-w-[80%]'>
-          <span className='absolute h-16 w-full bg-[#080725] top-16 lg:hidden' style={{ borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem' }}></span>
+          {/* <span className='absolute z-10 h-12 w-full bg-[#080725] top-16 lg:hidden'></span>
+          <span className='absolute z-20 h-12 w-full bg-[#080725] top-16 lg:hidden' style={{ borderTopLeftRadius: '2rem', borderTopRightRadius: '2rem' }}></span> */}
             <Navbar />
-            {musicComponents}
+            {component}
           </div>
           <span className='absolute z-[21] h-[2.5rem] w-full bg-[#080725] bottom-32 lg:bottom-16' style={{ borderBottomLeftRadius: '2rem', borderBottomRightRadius: '2rem' }}></span>
           <Player />

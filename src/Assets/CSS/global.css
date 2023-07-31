@@ -18,6 +18,7 @@ body{
 
 .modifiedScrollbar::-webkit-scrollbar{
     background-color: transparent;
+    display: none;
     width: 4px;
 }
 

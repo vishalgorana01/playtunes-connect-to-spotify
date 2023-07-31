@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import '../../Assets/CSS/global.css'
 import { credentials } from '../Utilities/Credentials'
 import axios from 'axios'
@@ -13,9 +13,10 @@ import album2 from '../../Assets/Images/album2.jpg'
 import album3 from '../../Assets/Images/album3.jpg'
 import { useStateProvider } from '../Utilities/StateProvider'
 import Description from '../Home/Description'
+import { myContext } from '../Utilities/AudioContext'
 
 function SeveralAlbums(props) {
-    const { setDescription } = props
+    const {component, setComponent} = useContext(myContext)
     const [{ token }, dispatch] = useStateProvider();
     const data = [1, 2, 3, 4, 5, 6, 7, 8, 9.10]
 
@@ -42,7 +43,7 @@ function SeveralAlbums(props) {
                     setSeveralAlbums(
                         resp.data.albums.map(({ images, name, type, id }, index) => {
                             return (
-                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => setDescription(<Description id={id} />)}>
+                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => setComponent(<Description id={id} />)}>
                                     <img className='w-36 sm:w-40 sm:h-32 rounded-lg' src={images[parseInt(Math.random() * 10) % 3].url} alt="error loading" />
                                     <h2 className='text-sm w-full text-left font-semibold'>{name}</h2>
                                     <h4 className='text-xs w-full text-left italic font-semibold text-gray-500'>{type}</h4>
@@ -58,10 +59,10 @@ function SeveralAlbums(props) {
     }, [token, dispatch])
 
     return (
-        <div className='flex gap-y-5 flex-col text-cyan-200 w-full max-w-full items-center justify-center px-12 py-8'>
+        <div className='flex gap-y-5 flex-col text-cyan-200 w-full max-w-full items-center justify-center px-3 lg:px-12 py-8'>
             <span className='flex items-center justify-between w-full'>
                 <h1 className='font-semibold text-xl'>Several Albums</h1>
-                <button className='text-pink-400 cursor-pointer'>see all</button>
+                {/* <button className='text-pink-400 cursor-pointer'>see all</button> */}
             </span>
 
             <span className='hideScrollbar flex items-center justify-start w-full overflow-x-scroll'>

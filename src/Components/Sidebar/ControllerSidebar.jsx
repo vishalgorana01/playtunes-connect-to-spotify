@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { colorPalette } from '../Utilities/ColorPalette'
 // react icons
 import { FiHome, FiSearch } from 'react-icons/fi'
@@ -9,9 +9,11 @@ import Explore from '../Home/Explore'
 import Search from '../Home/Search'
 import Playlists from '../Home/Playlists'
 import Library from '../YourLibrary/Library'
+import { myContext } from '../Utilities/AudioContext'
 
 function ControllerSidebar(props) {
     const { setMusicComponents } = props
+    const {component, setComponent} = useContext(myContext)
     const [active, setActive] = useState({
         home: true,
         search: false,
@@ -21,7 +23,7 @@ function ControllerSidebar(props) {
 
     const handleChange = (given) => {
         if (given == 'home') {
-            setMusicComponents(<Explore setDescription={setMusicComponents} />)
+            setComponent(<Explore />)
 
             setActive({
                 home: true,
@@ -31,7 +33,7 @@ function ControllerSidebar(props) {
             })
         }
         else if (given == 'search') {
-            setMusicComponents(<Search />)
+            setComponent(<Search />)
 
             setActive({
                 home: false,
@@ -41,7 +43,7 @@ function ControllerSidebar(props) {
             })
         }
         else if (given == 'yourLibrary') {
-            setMusicComponents(<Library setDescription={setMusicComponents} />)
+            setComponent(<Library />)
 
             setActive({
                 home: false,

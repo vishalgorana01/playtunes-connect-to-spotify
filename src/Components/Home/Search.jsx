@@ -29,7 +29,6 @@ function Search() {
       }
     })
       .then((resp) => {
-        console.log(resp.data.categories)
         const { items } = resp.data.categories
 
         setCategories(items.map((ele, index) => {
@@ -56,7 +55,7 @@ function Search() {
   }, [token, dispatch])
 
   return (
-    <div className='modifiedScrollbar flex mb-16 flex-col gap-y-8 items-center justify-start w-full py-8 px-2 sm:px-6 lg:px-12 overflow-y-scroll lg:max-h-[600px]'>
+    <div className='modifiedScrollbar pb-32 pt-6 lg:py-0 flex mb-16 flex-col gap-y-8 items-center justify-start w-full px-2 sm:px-6 lg:px-12 overflow-y-scroll lg:max-h-[600px]'>
       <h1 className='text-left w-full font-semibold text-xl'>Browse all</h1>
 
       <div className='grid grid-cols-2 gap-3.5 w-full md:grid-cols-3 xl:grid-cols-4'>

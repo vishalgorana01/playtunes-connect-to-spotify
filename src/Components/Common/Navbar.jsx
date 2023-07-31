@@ -26,8 +26,6 @@ function Navbar() {
       }
     })
       .then((resp) => {
-        console.log(resp)
-
         setProfile({
           displayName: resp.data.display_name,
           firstLetter: resp.data.display_name.toString()[0]
@@ -39,7 +37,7 @@ function Navbar() {
   }, [token, dispatch])
 
   return (
-    <div className='flex text-cyan-200 gap-x-7 items-start justify-between h-32 lg:h-auto w-full py-3.5 px-2.5 lg:px-12 bg-[#06061f]'>
+    <div className='flex text-cyan-200 gap-x-7 items-center justify-between w-full py-3.5 px-2.5 lg:px-12 bg-[#06061f] lg:h-auto'>
       <span className='flex items-center justify-center gap-x-0.5 text-xl'>
         <MdOutlineArrowBackIosNew className='cursor-pointer' />
         <MdArrowForwardIos className='cursor-pointer' />

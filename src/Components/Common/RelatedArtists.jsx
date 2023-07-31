@@ -12,15 +12,16 @@ import album1 from '../../Assets/Images/album1.jpg'
 import album2 from '../../Assets/Images/album2.jpg'
 import album3 from '../../Assets/Images/album3.jpg'
 import { useStateProvider } from '../Utilities/StateProvider'
-import Description from '../Home/Description'
+import ArtistDescription from '../Home/ArtistDescription'
 import { myContext } from '../Utilities/AudioContext'
 
-function NewReleases(props) {
+function RelatedArtists(props) {
     const {component, setComponent} = useContext(myContext)
+    const {id} = props
     const [{ token }, dispatch] = useStateProvider();
     const data = [1, 2, 3, 4, 5, 6, 7, 8, 9.10]
 
-    const [newReleases, setnewReleases] = useState(data.map((ele, index) => {
+    const [severalAlbums, setSeveralAlbums] = useState(data.map((ele, index) => {
         return (
             <span key={index} className='card cursor-pointer flex gap-y-1 flex-col items-start justify-center w-32'>
                 <img className='w-32 h-32 rounded-lg' src={album1} alt="error loading" />
@@ -30,48 +31,48 @@ function NewReleases(props) {
         )
     }))
 
+
     useEffect(() => {
         // Several Albums
-        axios.get('https://api.spotify.com/v1/browse/new-releases?country=IN', {
+        axios.get(`https://api.spotify.com/v1/artists/${id}/related-artists`, {
             headers: {
                 Authorization: 'Bearer ' + token
             }
         })
             .then((resp) => {
-                // console.log(resp.data)
-                resp.data.albums.items.map(({ name, type }, index) => {
-                    setnewReleases(
-                        resp.data.albums.items.map(({ images, name, type, id }, index) => {
+                console.log(resp)
+                // resp.data.albums.map(({ name, type }, index) => {
+                    setSeveralAlbums(
+                        resp.data.artists.map((ele, index) => {
                             return (
-                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => setComponent(<Description id={id} />)}>
-                                    <img className='w-36 sm:w-40 sm:h-32 rounded-lg' src={images[parseInt(Math.random() * 10) % 3].url} alt="error loading" />
-                                    <h2 className='text-sm w-full text-left font-semibold'>{name}</h2>
-                                    <h4 className='text-xs w-full text-left italic font-semibold text-gray-500'>{type}</h4>
+                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => setComponent(<ArtistDescription id={ele.id} />)}>
+                                    <img className='w-36 sm:w-40 sm:h-32 rounded-lg' src={ele.images[parseInt(Math.random() * 10) % 3].url} alt="error loading" />
+                                    <h2 className='text-sm w-full text-left font-semibold'>{ele.name}</h2>
+                                    <h4 className='text-xs w-full text-left italic font-semibold text-gray-500'>{ele.type}</h4>
                                 </span>
                             )
                         })
                     )
-                })
+                // })
             })
             .catch((err) => {
                 console.log(err)
             })
-    }, [token, dispatch])
+    }, [token, dispatch, id])
 
     return (
         <div className='flex gap-y-5 flex-col text-cyan-200 w-full max-w-full items-center justify-center px-3 lg:px-12 py-8'>
             <span className='flex items-center justify-between w-full'>
-                <h1 className='font-semibold text-xl'>New Releases</h1>
-                {/* <button className='text-pink-400 cursor-pointer'>see all</button> */}
+                <h1 className='font-semibold text-xl'>Related Artists</h1>
             </span>
 
             <span className='hideScrollbar flex items-center justify-start w-full overflow-x-scroll'>
                 <span className='flex items-start justify-center gap-x-5'>
-                    {newReleases}
+                    {severalAlbums}
                 </span>
             </span>
         </div>
     )
 }
 
-export default NewReleases
+export default RelatedArtists

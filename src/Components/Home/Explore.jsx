@@ -22,7 +22,7 @@ function Explore(props) {
     const {setDescription} = props
     return (
         <>
-            <div className='flex mb-16 lg:mb-0 modifiedScrollbar items-center justify-start flex-col overflow-y-scroll w-full lg:max-h-[600px]'>
+            <div className='flex pt-6 pb-24 lg:py-0 mb-16 lg:mb-0 modifiedScrollbar items-center justify-start flex-col overflow-y-scroll w-full lg:max-h-[600px]'>
                 {/* several albums */}
                 <SeveralAlbums setDescription={setDescription} />
 

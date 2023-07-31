@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useStateProvider } from '../Utilities/StateProvider'
+import RelatedArtists from  '../../Components/Common/RelatedArtists'
 
 import image1 from '../../Assets/Images/album1.jpg'
 import image2 from '../../Assets/Images/album2.jpg'
@@ -12,9 +13,11 @@ import { AiFillPlayCircle, AiOutlineHeart } from 'react-icons/ai'
 import { BsThreeDots } from 'react-icons/bs'
 import { BiTime } from 'react-icons/bi'
 import { colorPalette } from '../Utilities/ColorPalette'
+import { myContext } from '../Utilities/AudioContext'
 
 
 function ArtistDescription(props) {
+    const {audioUrl, setAudioUrl} = useContext(myContext)
     const [{ token }, dispatch] = useStateProvider()
     const { id } = props
 
@@ -69,6 +72,7 @@ function ArtistDescription(props) {
         };
     }
 
+
     useEffect(() => {
         axios.get(`https://api.spotify.com/v1/artists/${id}`, {
             headers: {
@@ -76,14 +80,15 @@ function ArtistDescription(props) {
             }
         })
             .then((resp) => {
+                console.log(resp)
                 const { name, type, images, followers } = resp.data
 
                 setArtistDetails(
-                    <div className='relative flex items-center overflow-hidden justify-center w-full h-[160px] sm:h-[280px] px-8 py-20 sm:py-32 lg:py-48 sm:px-12 lg:h-[320px]' style={{ background: 'radial-gradient(#f54d69, transparent)' }}>
-                        <img className={`absolute opacity-50 top-0 z-0 w-full object-cover object-top h-[160px] sm:h-[280px] lg:h-[640px]`} src={images[0].url} alt="error loading" />
+                    <div className='relative flex items-center overflow-hidden justify-center w-full h-[160px] sm:h-[280px] px-8 py-32 md:py-44 sm:py-32 lg:py-48 sm:px-12 lg:h-[320px]' style={{ background: 'radial-gradient(#f54d69, transparent)' }}>
+                        <img className={`absolute opacity-50 z-0 w-full h-auto object-cover object-top -top-16 sm:-top-40 md:-top-52 lg:-top-60`} src={images[0].url} alt="error loading" />
                         <span className='flex relative gap-x-5 items-center justify-start w-full sm:gap-x-8' >
                             <span className='z-10 flex text-left font-semibold gap-y-1.5 flex-col items-start justify-center sm:gap-y-3.5'>
-                                <h1 className=' sm:text-3xl md:text-4xl lg:text-5xl'>{name}</h1>
+                                <h1 className='text-xl sm:text-3xl md:text-4xl lg:text-5xl'>{name}</h1>
                                 <h5 className='text-xs sm:text-lg'>{type}</h5>
                                 <h5 className='text-xs sm:text-lg'>{followers.total} followers</h5>
                             </span>
@@ -98,17 +103,22 @@ function ArtistDescription(props) {
                     }
                 })
                     .then((resp) => {
-                        // console.log(resp)
-
-                        const trackData = resp.data.tracks.map(({ artists, duration_ms, name }, index) => {
+                        const trackData = resp.data.tracks.map(({ artists, duration_ms, name, preview_url}, index) => {
                             return (
-                                <span key={index} className='flex mb-3 px-1.5 py-2.5 rounded-md cursor-pointer items-start justify-start  w-screen sm:w-full hover:bg-[#79124536]'>
+                                <span key={index} className='flex mb-3 px-1.5 py-2.5 rounded-md cursor-pointer items-start justify-start  w-screen sm:w-full hover:bg-[#79124536]' 
+                                onClick={() => setAudioUrl({
+                                    url: preview_url,
+                                    image: '',
+                                    name: name,
+                                    artists: artists,
+                                    play: 1
+                                  })}>
                                     <span className='w-12 px-1.5 '>{index + 1}</span>
                                     <span className='flex gap-x-2.5 items-center justify-start w-full'>
                                         <img className='h-12 hidden sm:h-16 sm:inline-block' src={image2} alt="error loading" />
                                         <span className='flex text-left gap-y-1.5 flex-col items-start justify-center overflow-x-hidden sm:overflow-x-auto'>
-                                            <h3 className='max-w-[10rem] w-full text-md textWraper sm:max-w-none'>{name}</h3>
-                                            <h6 className='text-xs max-w-[10rem] textWraper sm:max-w-none'>
+                                            <h3 className='max-w-[10rem] w-full text-md textWraper md:max-w-sm lg:max-w-xl'>{name}</h3>
+                                            <h6 className='text-xs max-w-[10rem] textWraper md:max-w-sm lg:max-w-xl'>
                                                 {artists.map(({ name }, num) => {
                                                     return (
                                                         <span key={num} className='mr-1'>{name} ,</span>
@@ -144,16 +154,16 @@ function ArtistDescription(props) {
             .catch((err) => {
                 console.log(err)
             })
-    }, [token, dispatch])
-
-
+    }, [token, dispatch, id])
 
     return (
         <>
-            <div className='modifiedScrollbar flex mb-26 lg:mb-0 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[600px]'>
+            <div className='modifiedScrollbar pb-40 flex mb-26 lg:mb-0 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[600px]'>
                 {ArtistDetails}
                 {desc}
                 {artistsTopTracks}
+                {/* {relatedAtrtists} */}
+                <RelatedArtists id={id} />
                 {/* <embed src="https://p.scdn.co/mp3-preview/a89463ed3d1100f2732b8961065219149e61841b?cid=6a9912a00dcb4fc38eb99b185db7dd17" type="" /> */}
             </div>
         </>

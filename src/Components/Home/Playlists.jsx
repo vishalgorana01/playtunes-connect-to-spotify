@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import album3 from '../../Assets/Images/album1.jpg'
 import { useStateProvider } from '../Utilities/StateProvider'
 import axios from 'axios';
@@ -7,17 +7,17 @@ import { AiFillHeart } from 'react-icons/ai'
 import { FiPlus } from 'react-icons/fi'
 import LikedSongsDescription from '../YourLibrary/LikedSongsDescription';
 import { setMusicComponents } from '../../Pages/Home';
+import { myContext } from '../Utilities/AudioContext';
 
 function Playlists(props) {
-  const { setDescription } = props
+  const {component, setComponent} = useContext(myContext)
   const [{ token }, dispatch] = useStateProvider();
 
   const [songsLength, setSongsLength] = useState(0)
 
   const handleChange = (given) => {
     if (given == 'likedSongs') {
-      console.log(given)
-      setDescription(<LikedSongsDescription />)
+      setComponent(<LikedSongsDescription />)
     }
     else {
 

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useStateProvider } from '../Utilities/StateProvider'
 
 import '../../Assets/CSS/global.css'
@@ -12,9 +12,11 @@ import { AiFillPlayCircle, AiOutlineHeart } from 'react-icons/ai'
 import { BsThreeDots } from 'react-icons/bs'
 import { BiTime } from 'react-icons/bi'
 import { colorPalette } from '../Utilities/ColorPalette'
+import { myContext } from '../Utilities/AudioContext'
 
 
 function Description(props) {
+    const {audioUrl, setAudioUrl} = useContext(myContext)
     const [{ token }, dispatch] = useStateProvider()
     const { id } = props
 
@@ -71,13 +73,18 @@ function Description(props) {
             }
         })
             .then((resp) => {
-                // console.log(resp)
-
                 const { name, type, images, label, tracks } = resp.data
 
-                const trackData = tracks.items.map(({artists, duration_ms, name}, index) => {
+                const trackData = tracks.items.map(({artists, duration_ms, name, preview_url}, index) => {
                     return (
-                        <span key={index} className='flex mb-3 px-1.5 py-2.5 rounded-md cursor-pointer items-start justify-start  w-screen sm:w-full hover:bg-[#79124536]'>
+                        <span key={index} className='flex mb-3 px-1.5 py-2.5 rounded-md cursor-pointer items-start justify-start  w-screen sm:w-full hover:bg-[#79124536]' 
+                        onClick={() => setAudioUrl({
+                            url: preview_url,
+                            image: '',
+                            name: name,
+                            artists: artists,
+                            play: 1
+                          })}>
                             <span className='w-12 px-1.5 '>{index+1}</span>
                             <span className='flex gap-x-2.5 items-center justify-start w-full'>
                                 <img className='h-12 hidden sm:h-16 sm:inline-block' src={image2} alt="error loading" />
@@ -141,7 +148,7 @@ function Description(props) {
 
     return (
         <>
-            <div className='flex modifiedScrollbar mb-26 lg:mb-0 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[72vh]'>
+            <div className='flex modifiedScrollbar pb-16 mb-26 lg:mb-0 items-center justify-start flex-col overflow-y-scroll w-full h-full lg:max-h-[72vh]'>
                 {desc}
                 {/* <embed src="https://p.scdn.co/mp3-preview/a89463ed3d1100f2732b8961065219149e61841b?cid=6a9912a00dcb4fc38eb99b185db7dd17" type="" /> */}
             </div>

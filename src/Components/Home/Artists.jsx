@@ -16,7 +16,7 @@ import ArtistDescription from './ArtistDescription'
 import { myContext } from '../Utilities/AudioContext'
 
 function Artist(props) {
-    const {component, setComponent} = useContext(myContext)
+    const {audioUrl, component, forwardStack, backwardStack, setComponent, setAudioUrl, setBackwardStack, setForwardStack} = useContext(myContext)
     const [{ token }, dispatch] = useStateProvider();
     const data = [1, 2, 3, 4, 5, 6, 7, 8, 9.10]
 
@@ -30,6 +30,14 @@ function Artist(props) {
         )
     }))
 
+    const handleChange = (id)=>{
+        while(forwardStack.length > 0){
+            forwardStack.pop();
+        }
+        setComponent(<ArtistDescription id={id} />)
+        backwardStack.push(component)
+    }
+
     useEffect(() => {
         // Several Albums
         axios.get('https://api.spotify.com/v1/me/top/artists', {
@@ -42,7 +50,7 @@ function Artist(props) {
                     setSeveralAlbums(
                         resp.data.items.map(({ images, name, type, id }, index) => {
                             return (
-                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => setComponent(<ArtistDescription id={id} />)}>
+                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => handleChange(id)}>
                                     <img className='w-36 sm:w-40 sm:h-32 rounded-lg' src={images[parseInt(Math.random() * 10) % 3].url} alt="error loading" />
                                     <h2 className='text-sm w-full text-left font-semibold'>{name}</h2>
                                     <h4 className='text-xs w-full text-left italic font-semibold text-gray-500'>{type}</h4>

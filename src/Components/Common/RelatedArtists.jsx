@@ -16,7 +16,7 @@ import ArtistDescription from '../Home/ArtistDescription'
 import { myContext } from '../Utilities/AudioContext'
 
 function RelatedArtists(props) {
-    const {component, setComponent} = useContext(myContext)
+    const {audioUrl, component, forwardStack, backwardStack, setComponent, setAudioUrl, setBackwardStack, setForwardStack} = useContext(myContext)
     const {id} = props
     const [{ token }, dispatch] = useStateProvider();
     const data = [1, 2, 3, 4, 5, 6, 7, 8, 9.10]
@@ -30,6 +30,15 @@ function RelatedArtists(props) {
             </span>
         )
     }))
+
+    const handleChange = (id)=>{
+        while(forwardStack.length > 0){
+            forwardStack.pop();
+        }
+
+        setComponent(<ArtistDescription id={id} />)
+        backwardStack.push(component)
+    }
 
 
     useEffect(() => {
@@ -45,7 +54,7 @@ function RelatedArtists(props) {
                     setSeveralAlbums(
                         resp.data.artists.map((ele, index) => {
                             return (
-                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => setComponent(<ArtistDescription id={ele.id} />)}>
+                                <span key={index} className='card w-40 text-left flex cursor-pointer gap-y-1 flex-col items-center justify-center p-2.5 rounded-md' onClick={() => handleChange(ele.id)}>
                                     <img className='w-36 sm:w-40 sm:h-32 rounded-lg' src={ele.images[parseInt(Math.random() * 10) % 3].url} alt="error loading" />
                                     <h2 className='text-sm w-full text-left font-semibold'>{ele.name}</h2>
                                     <h4 className='text-xs w-full text-left italic font-semibold text-gray-500'>{ele.type}</h4>

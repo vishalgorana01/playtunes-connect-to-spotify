@@ -10,14 +10,18 @@ import { setMusicComponents } from '../../Pages/Home';
 import { myContext } from '../Utilities/AudioContext';
 
 function Playlists(props) {
-  const {component, setComponent} = useContext(myContext)
+  const {audioUrl, component, forwardStack, backwardStack, setComponent, setAudioUrl, setBackwardStack, setForwardStack} = useContext(myContext)
   const [{ token }, dispatch] = useStateProvider();
 
   const [songsLength, setSongsLength] = useState(0)
 
   const handleChange = (given) => {
     if (given == 'likedSongs') {
-      setComponent(<LikedSongsDescription />)
+      while(forwardStack.length > 0){
+        forwardStack.pop();
+    }
+    setComponent(<LikedSongsDescription />)
+    backwardStack.push(component)
     }
     else {
 

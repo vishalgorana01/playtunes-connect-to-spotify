@@ -23,6 +23,9 @@ function App() {
 
   const [component, setComponent] = useState(<Explore />)
 
+  const [forwardStack, setForwardStack] = useState(new Array())
+  const [backwardStack, setBackwardStack] = useState(new Array())
+
   const [{ token }, dispatch] = useStateProvider();
   useEffect(() => {
     const hash = window.location.hash;
@@ -36,7 +39,7 @@ function App() {
 
   return (
     <div className="App">
-      <myContext.Provider value={{audioUrl, component, setComponent, setAudioUrl}}>
+      <myContext.Provider value={{audioUrl, component, forwardStack, backwardStack, setComponent, setAudioUrl, setBackwardStack, setForwardStack}}>
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<SignIn />}></Route>

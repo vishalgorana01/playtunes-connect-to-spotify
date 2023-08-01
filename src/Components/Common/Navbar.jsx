@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 
 // react icons
 import { MdOutlineArrowBackIosNew } from 'react-icons/md'
@@ -8,16 +8,36 @@ import { MdOutlineNotificationsNone } from 'react-icons/md'
 import { AiTwotoneSetting } from 'react-icons/ai'
 import { useStateProvider } from '../Utilities/StateProvider'
 import axios from 'axios'
+import { myContext } from '../Utilities/AudioContext'
 
 function Navbar() {
   const [{ token }, dispatch] = useStateProvider();
   const [search, setSearch] = useState('')
+
+
+  const { audioUrl, component, forwardStack, backwardStack, setComponent, setAudioUrl, setBackwardStack, setForwardStack } = useContext(myContext)
 
   const [profile, setProfile] = useState({
     displayName: 'Guest',
     img: null,
     firstLetter: ''
   })
+
+  const backward = () => {
+    if (backwardStack.length > 0) {
+      setComponent(backwardStack[backwardStack.length - 1]);
+      forwardStack.push(component)
+      backwardStack.pop()
+    }
+  }
+
+  const forward = () => {
+    if (forwardStack.length > 0) {
+      setComponent(forwardStack[forwardStack.length - 1]);
+      backwardStack.push(component)
+      forwardStack.pop()
+    }
+  }
 
   useEffect(() => {
     axios.get('https://api.spotify.com/v1/me', {
@@ -39,8 +59,8 @@ function Navbar() {
   return (
     <div className='flex text-cyan-200 gap-x-7 items-center justify-between w-full py-3.5 px-2.5 lg:px-12 bg-[#06061f] lg:h-auto'>
       <span className='flex items-center justify-center gap-x-0.5 text-xl'>
-        <MdOutlineArrowBackIosNew className='cursor-pointer' />
-        <MdArrowForwardIos className='cursor-pointer' />
+        <MdOutlineArrowBackIosNew className={`${backwardStack.length ? 'opacity-100' : 'opacity-50'} cursor-pointer`} onClick={() => backward()} />
+        <MdArrowForwardIos className={`${forwardStack.length ? 'opacity-100' : 'opacity-50'} cursor-pointer`} onClick={() => forward()} />
       </span>
 
       <label htmlFor="" className='flex items-center justify-center gap-y-2.5 w-full bg-[#19183e] py-1.5 px-3 rounded-md'>

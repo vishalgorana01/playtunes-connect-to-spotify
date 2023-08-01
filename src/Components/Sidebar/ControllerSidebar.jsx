@@ -13,7 +13,7 @@ import { myContext } from '../Utilities/AudioContext'
 
 function ControllerSidebar(props) {
     const { setMusicComponents } = props
-    const {component, setComponent} = useContext(myContext)
+    const { audioUrl, component, forwardStack, backwardStack, setComponent, setAudioUrl, setBackwardStack, setForwardStack} = useContext(myContext)
     const [active, setActive] = useState({
         home: true,
         search: false,
@@ -23,7 +23,11 @@ function ControllerSidebar(props) {
 
     const handleChange = (given) => {
         if (given == 'home') {
+            while(forwardStack.length > 0){
+                forwardStack.pop();
+            }
             setComponent(<Explore />)
+            backwardStack.push(component)
 
             setActive({
                 home: true,
@@ -33,7 +37,11 @@ function ControllerSidebar(props) {
             })
         }
         else if (given == 'search') {
+            while(forwardStack.length > 0){
+                forwardStack.pop();
+            }
             setComponent(<Search />)
+            backwardStack.push(component)
 
             setActive({
                 home: false,
@@ -43,7 +51,11 @@ function ControllerSidebar(props) {
             })
         }
         else if (given == 'yourLibrary') {
+            while(forwardStack.length > 0){
+                forwardStack.pop();
+            }
             setComponent(<Library />)
+            backwardStack.push(component)
 
             setActive({
                 home: false,
@@ -53,7 +65,7 @@ function ControllerSidebar(props) {
             })
         }
         else if (given == 'profile') {
-            // setMusicComponents(<Search />)
+            // setComponent(<Library />)
 
             setActive({
                 home: false,
